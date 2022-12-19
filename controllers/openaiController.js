@@ -11,7 +11,7 @@ const generateImage = async (req, res) => {
     const response = await openai.createImage({
         prompt: 'Polar bear on desert',
         n: 1,
-        size: '512x512'
+        size: '512x512',
     });
 
     const imgUrl = response.data.data[0].url
