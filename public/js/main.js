@@ -1,6 +1,10 @@
 function onSubmit(e) {
     e.preventDefault();
 
+    document.querySelector('.msg').textContent = '';
+    document.querySelector('#image').src = '';
+
+
     const prompt = document.querySelector('#prompt').value;
     const size = document.querySelector('#size').value;
 
@@ -34,13 +38,27 @@ async function generateImageReq(prompt, size) {
                 prompt,
                 size,
             })
-        })
+        });
         
+        if (!response.ok){
+
+            removeSpinner();
+            throw new Error('That image could not be generated');
+        }
+
+        const data = await response.json();
+        //console.log(data);
+
+        const imageUrl = data.data; 
+        document.querySelector('#image').src = imageUrl;
+         
+        removeSpinner();
      } catch (error) {
         
+        document.querySelector('.msg').textContent = error;
      }
 }
-
+ 
 //  Show spinner 
 function showSpinner(){
     document.querySelector('.spinner').classList.add('show');
@@ -48,7 +66,7 @@ function showSpinner(){
 
 //  Hide spinner 
 function removeSpinner(){
-    document.querySelector('.spinner').classList.add('show');
+    document.querySelector('.spinner').classList.remove('show');
 }
 
 document.querySelector('#image-form').addEventListener('submit', onSubmit); 

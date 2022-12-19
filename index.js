@@ -5,7 +5,7 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 
-// ENABLE BODY PARSER 
+// Enabe BODY PARSER 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
